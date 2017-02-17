@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+<head>
+    <title>权限节点添加</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="__PUBLIC__/admin/css/bootstrap.min.css" rel="stylesheet">
+
+</head>
+<body>
+<div style="height:20px"></div>
+<div>
+    <form class="form-horizontal" role="form" action='Grant/adminInfo' menthod='post'>
+        <div class="form-group">
+            <label for="inputEmail3" class="col-sm-2 control-label">节点名:</label>
+            <div class="col-sm-9">
+                <input type="email" class="form-control" id="title" value="{{$info.title}}"  placeholder="节点的中文名(eg:后台首页)">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="inputEmail3" class="col-sm-2 control-label">节点:</label>
+            <div class="col-sm-9">
+                <input type="text" class="form-control" id="name"  value="{{$info.name}}" >
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="inputEmail3" class="col-sm-2 control-label">所属模块:</label>
+            <div class="col-sm-9">
+                <input type="text" class="form-control" id="mudel"  value="{{$info.mudel}}" >
+            </div>
+        </div>
+        <div class="form-group">
+                <label for="inputEmail3" class="col-sm-2 control-label"></label>
+            <div class="col-sm-9">
+               <tr>
+                   <td>
+                   <foreach name="options" item="val">
+                       <label class="checkbox-inline"> <input type="radio"  name ='mradio' class='rules' <?php if($val==$info['mudel']){ echo 'checked';}?> value='{{$val}}'> {{$val}}</label>
+                   </foreach>
+                   </td>
+               </tr>
+            </div>
+        </div>
+        <!--<div class="form-group">-->
+            <!--<label for="inputEmail3" class="col-sm-2 control-label">添加模块:</label>-->
+            <!--<div class="col-sm-9">-->
+                <!--<input type="text" class="form-control" id="mudel" placeholder="模块(eg:用户模块)" >-->
+            <!--</div>-->
+        <!--</div>-->
+
+        <div class="form-group">
+            <label for="inputEmail3" class="col-sm-2 control-label">附加规则:</label>
+            <div class="col-sm-9">
+                <input type="text" class="form-control" id="condition" value="{{$info.condition}}" >
+            </div>
+        </div>
+
+    </form>
+    <div class="form-group" style='text-align: center;'>
+        <button type="button" class="btn btn-primary" idnum="{{$info.id}}" >提交</button>
+    </div>
+</div>
+</body>
+<script src="__PUBLIC__/admin/js/jquery-1.11.1.min.js"></script>
+<script src="__PUBLIC__/admin/layer/layer.js"></script>
+<script>
+    $('.btn-primary').on('click',function(){
+   // alert($('input[name="mradio"]:checked').val())
+        layer.load(1);//layer 加载层
+        var id =$('.btn-primary').attr('idnum');
+        var title = $('#title').val();
+        var name = $('#name').val();
+        var muradio = $('input[name="mradio"]:checked').val();
+        var mudel = $('#mudel').val();
+       // var condition = $('#condition').val();
+
+        //alert(status);
+        $.ajax({
+            url:"{{:U('Grant/rulesEdit')}}",
+            type:'POST',
+            data:{title:title,name:name,mradio:muradio,mudel:mudel,id:id},
+            success:function(res){
+                layer.closeAll('loading');
+                if(res===1){
+                    layer.msg('添加成功');
+                }else{
+                    layer.msg(res);
+                }
+            }
+        })
+    })
+</script>
+</html>

@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>登录</title>
+
+<link href="__PUBLIC__/admin/css/bootstrap.min.css" rel="stylesheet">
+<link href="__PUBLIC__/admin/css/datepicker3.css" rel="stylesheet">
+<link href="__PUBLIC__/admin/css/styles.css" rel="stylesheet">
+
+
+
+</head>
+
+<body>
+	
+	<div class="row">
+		<div class="col-xs-10 col-xs-offset-1 col-sm-8 col-sm-offset-2 col-md-4 col-md-offset-4">
+			<div class="login-panel panel panel-default">
+				<div class="panel-heading">登录</div>
+				<div class="panel-body">
+					<form role="form">
+						<fieldset>
+							<div class="form-group">
+								<input class="form-control" placeholder="用户名" id='username' name="username" type="email" autofocus="">
+							</div>
+							<div class="form-group">
+								<input class="form-control" placeholder="密码" id='passwd' name="passwd" type="password" value="">
+							</div>
+                                                        <div class="form-group">
+                                                            <img style="cursor:pointer;" src="{{:U('Login/verify')}}" onclick="changeimg()" class="img-responsive verimg" alt="Responsive image" > <a onclick="changeimg()" style="cursor:pointer;">看不清,点击换一张</a>
+                                                        </div>    
+                                                        <div class="form-group">
+								<input class="form-control"  placeholder="验证码" id='vercode' name="vercode" type="text" value="">
+							</div>
+							<div class="checkbox">
+<!--								<label>
+									<input name="remember" type="checkbox" value="Remember Me">记住我
+								</label>-->
+							</div>
+							<a  class="btn btn-primary">登录</a>
+						</fieldset>
+					</form>
+				</div>
+			</div>
+		</div><!-- /.col-->
+	</div><!-- /.row -->	
+	
+		
+
+	<script src="__PUBLIC__/admin/js/jquery-1.11.1.min.js"></script>
+	<script src="__PUBLIC__/admin/js/bootstrap.min.js"></script>
+	<script src="__PUBLIC__/admin/js/chart.min.js"></script>
+	<script src="__PUBLIC__/admin/js/chart-data.js"></script>
+	<script src="__PUBLIC__/admin/js/easypiechart.js"></script>
+	<script src="__PUBLIC__/admin/js/easypiechart-data.js"></script>
+	<script src="__PUBLIC__/admin/js/bootstrap-datepicker.js"></script>
+	<script src="__PUBLIC__/admin/layer/layer.js"></script>
+	<script>
+            function changeimg(){
+                var num = Math.random();
+               // alert($('.verimg').prop('src'))
+                $('.verimg').prop('src',$('.verimg').prop('src')+'?'+num);
+            }
+            
+             $('.btn-primary').click(function(){
+                var ii = layer.load();
+                var username = $('#username').val();
+                var passwd = $('#passwd').val();
+                var vercode = $('#vercode').val();
+                $.ajax({
+                    url:"{{:U('Login/login')}}",
+                    type:"POST",
+                    data:{username:username,passwd:passwd,vercode:vercode},
+                    success:function(res){
+                        layer.close(ii);
+                        if(res.status===1){
+                            layer.msg('登录成功!');
+                            window.location.href='{{:U('Index/index')}}';
+                        }else {
+                            changeimg();
+                            layer.msg(res.msg);
+                        }
+                    }
+                })   
+            })
+            
+           
+            
+           
+                
+	</script>
+
+</body>
+
+</html>

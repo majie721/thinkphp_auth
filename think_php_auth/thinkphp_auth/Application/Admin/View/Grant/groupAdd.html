@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>权限组添加</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link href="__PUBLIC__/admin/css/bootstrap.min.css" rel="stylesheet">
+        
+    </head>
+    <body>
+        <div style="height:20px"></div>
+        <div>
+            <form class="form-horizontal" role="form" action='Grant/adminInfo' menthod='post'>
+                <div class="form-group">
+                    <label for="inputEmail3" class="col-sm-2 control-label">权限组:</label>
+                    <div class="col-sm-9">
+                      <input type="email" class="form-control" id="adminname" value="" >
+                    </div>
+                </div>
+                
+                 <div class="form-group">
+                    <label for="inputEmail3" class="col-sm-2 control-label">描述:</label>
+                    <div class="col-sm-9">
+                      <input type="text" class="form-control" id="describe" placeholder="权限描述" >
+                    </div>
+                </div>
+                
+                
+                
+                <div class="form-group">
+                    <label for="inputEmail3" class="col-sm-2 control-label">状态:</label>
+                    <div class="col-sm-9">
+                      <div class="radio">
+                            <label>
+                              <input type="radio" name="status" id="optionsRadios1" value="1" checked >
+                              正常
+                            </label>
+                        </div>
+                        <div class="radio">
+                            <label>
+                              <input type="radio" name="status" id="optionsRadios2" value="0" >
+                              禁用
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </form>
+            <div class="form-horizontal">      
+            <div class="form-group">
+                    <label for="inputEmail3" class="col-sm-2 control-label" style='text-align: right'>添加节点:</label>
+                    <div class="col-sm-9">
+                        <table class='table table-striped table-bordered table-hover'>
+                            <foreach name="data" item="v" key='k'>
+                            <tr>
+                                <td>
+                                    <label class="checkbox-inline"> <input type="checkbox" class="mudel"> {{$k}}</label>
+                                </td>
+                            </tr>
+                            <tr>  
+                                <td style="padding-left: 60px">
+                                    <foreach name="v" item='val' >
+                                    <label class="checkbox-inline"> <input type="checkbox" class='rules' value='{{$val['id']}}'> {{$val['title']}}</label>  
+                                    </foreach>
+                                </td>
+                            </tr>
+                            </foreach>
+                        </table>
+                    </div>    
+            </div>
+           </div>
+          
+            
+                <div class="col-sm-12 form-group" style='text-align: center;'>
+                    <button type="button" class="btn btn-primary" >提交</button>
+                </div>
+        </div>
+    </body>
+    <script src="__PUBLIC__/admin/js/jquery-1.11.1.min.js"></script>
+    <script src="__PUBLIC__/admin/layer/layer.js"></script>
+    <script>
+        $('.btn-primary').on('click',function(){
+            layer.load(1);//layer 加载层
+            var title = $('#adminname').val();
+            var status = $("input[name='status']:checked").val();
+            var describe = $('#describe').val();
+            var passwd = $('#passwd').val();
+            var rules = '';
+            $('.rules').each(function(){
+                if (true === $(this).prop("checked")) { 
+                    rules += $(this).prop('value')+','; 
+                }
+            })
+            
+            $.ajax({
+                url:"{{:U('Grant/groupAdd')}}",
+                type:'POST',
+                data:{title:title,status:status,discribe:describe,rules:rules},
+                success:function(res){
+                  layer.closeAll('loading');
+                  if(res===1){
+                    layer.msg('添加成功');
+                  }else{
+                    layer.msg(res); 
+                  }
+                }
+            })
+        })
+        
+        $(".mudel").click(function(){ 
+            if(this.checked){
+                $(this).parent().parent().parent().next().find('input').prop("checked", true);  
+            }else{   
+                $(this).parent().parent().parent().next().find('input').prop("checked", false);
+            }   
+        });
+    </script>
+</html>
+

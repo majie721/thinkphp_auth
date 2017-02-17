@@ -1,0 +1,299 @@
+<!--_meta 作为公共模版分离出去-->
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="renderer" content="webkit|ie-comp|ie-stand">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+<LINK rel="Bookmark" href="/favicon.ico" >
+<LINK rel="Shortcut Icon" href="/favicon.ico" />
+<!--[if lt IE 9]>
+<script type="text/javascript" src="/Public/admin/js/html5.js"></script>
+<script type="text/javascript" src="/Public/admin/js/respond.min.js"></script>
+<script type="text/javascript" src="/Public/admin/js/PIE_IE678.js"></script>
+<![endif]-->
+<link rel="stylesheet" type="text/css" href="__PUBLIC__/admin/hui/css/H-ui.min.css" />
+<link rel="stylesheet" type="text/css" href="__PUBLIC__/admin/hui/css/H-ui.admin.css" />
+<link rel="stylesheet" type="text/css" href="__PUBLIC__/admin/hui/css/iconfont.css" />
+<link rel="stylesheet" type="text/css" href="__PUBLIC__/admin/hui/css/icheck.css" />
+<link rel="stylesheet" type="text/css" href="__PUBLIC__/admin/hui/css/style.css" />
+<!--[if IE 6]>
+<script type="text/javascript" src="/Public/admin/js/DD_belatedPNG_0.0.8a-min.js" ></script>
+<script>DD_belatedPNG.fix('*');</script>
+<![endif]-->
+<!--/meta 作为公共模版分离出去-->
+<title>添加客户</title>
+</head>
+<body>
+<div class="page-container">
+<!--    <form action="<*:U('Custom/customaddsave')*>" method="post" class="form form-horizontal" id="form-category-add">-->
+    <div class="table_full">
+      <table width="100%" id='firstshow'>
+        <tr>
+          <th>客户名称</th>
+          <td>
+              <input name="id" type="hidden"  value="<*$res.id*>">
+              <input name="staffid" type="hidden"  value="<*$isstaff*>">
+              <input type="text" class="input-text" value="<*$res.customname*>" placeholder=""  name="customname"></td>
+        </tr>
+        <tr><td>&nbsp;</td></tr>
+         <tr>
+          <th>类型</th>
+          <td><select class="select" id="sel_Sub" name="customtypeid">
+                    <volist name="type" id="v">
+                        <option value="<*$v.id*>" <if condition="$v['id'] eq $res['customtypeid']"> selected="selected"</if>><*$v.typename*></option>
+                    </volist>
+             </select></td>
+        </tr>
+         <tr><td>&nbsp;</td></tr>
+         <tr>
+          <th>分仓管理权限</th>
+          <td><select class="select" id="iswarehouse" name="iswarehouse">
+                <option value="1" <if condition="$res[iswarehouse] eq 1">selected='selected'</if>>是</option>
+                <option value="0" <if condition="$res[iswarehouse] eq 0">selected='selected'</if>>否</option>
+             </select></td>
+        </tr>
+        <tr><td>&nbsp;</td></tr>
+         <tr>
+          <th>收款单位</th>
+          <td><select class="select" id="sel_Sub1" name="receivablesid">
+                    <volist name="rec" id="v">
+                        <option value="<*$v.id*>" <if condition="$v['id'] eq $res['receivablesid']"> selected="selected"</if>><*$v.recname*></option>
+                    </volist>
+              </select></td>
+        </tr>
+                <tr><td>&nbsp;</td></tr>
+         <tr>
+          <th>隶属员工</th>
+          <td><select class="select" id="sel_Sub3" name="staffid">
+                  <option value="">请选择员工</option>
+                    <volist name="staff" id="v">
+                        <option value="<*$v.customid*>" <if condition="$v['customid'] eq $res['staffpid']"> selected="selected"</if>><*$v.customname*></option>
+                    </volist>
+              </select></td>
+        </tr>
+         <tr><td>&nbsp;</td></tr>
+         <tr>
+          <th>隶属分仓</th>
+          <td><select class="select" id="sel_Sub2" name="warehouseid">
+                    <volist name="ware" id="v">
+                        <option value="<*$v.id*>" <if condition="$v['id'] eq $res['warehouseid']">selected='selected'</if>><*$v.warename*></option>
+                    </volist>
+              </select></td>
+        </tr>
+        <tr><td>&nbsp;</td></tr>
+        <tr>
+          <th>是否属于员工</th>
+          <td><select class="select" id="sel_Sub4" name="isstaff">
+                  <option value="0" >否</option>
+                  <option value="1" <if condition="$isstaff">selected='selected'</if>>是</option>
+              </select></td>
+        </tr>
+        <tr><td>&nbsp;</td></tr>
+         <tr>
+          <th>手续费类型</th>
+          <td><select class="select" id="sel_Sub5" name="counterfeeid">
+                    <volist name="counterfee" id="v">
+                        <option value="<*$v.id*>"  <if condition="$v[id] eq $res['counterfeeid']">selected='selected'</if>><*$v.countername*></option>
+                    </volist>
+              </select></td>
+        </tr>
+        <tr><td>&nbsp;</td></tr>
+        <tr>
+          <th>客户角色</th>
+          <td>
+              <select class="select" id="sel_Sub6" name="issupplier">
+                <option value="" >请选择角色</option>
+                <volist name='role' id='vo'>
+                    <option value="<*$vo[id]*>" <if condition="$res[customroleid] eq $vo[id]">selected='selected'</if>><*$vo.rolename*></option>
+                </volist>
+              </select></td>
+        </tr>
+        <tr><td>&nbsp;</td></tr>
+        <tr>
+          <th>是否绑定京东门店</th>
+          <td><select class="select" id="sel_Sub7" name="issupplier">
+                <option value="" >请选择门店</option>
+                <volist name="station" id="vo">
+                    <option value="<*$vo[stationno]*>" <if condition="$res[stationno] eq $vo[stationno]">selected='selected'</if>><*$vo[stationname]*></option>
+                </volist>
+              </select></td>
+        </tr>
+        <tr><td>&nbsp;</td></tr>
+        <tr>
+          <th>电话/账号</th>
+          <td><input type="text" class="input-text" value="<*$res.phone*>" placeholder=""  name="phone" onblur="chkphone(this)"><span id="account"></span></td>
+        </tr>
+        <tr><td>&nbsp;</td></tr>
+        <tr>
+          <th>地址</th>
+          <td><input type="text" class="input-text" value="<*$res.address*>" placeholder=""  name="address" autocomplete="off"></td>
+        </tr>
+        <tr><td>&nbsp;</td></tr>
+        <tr>
+          <th>密码</th>
+          <td><input type="text" class="input-text" value="<*$res.pwd*>" autocomplete="off"  name="password"></td>
+        </tr>
+		<tr><td>&nbsp;</td></tr>
+        <tr>
+          <th>打印机终端号</th>
+          <td><input type="text" class="input-text" value="<*$res.printercode*>"   name="printercode"></td>
+        </tr>
+		<tr><td>&nbsp;</td></tr>
+        <tr>
+          <th>打印机密钥</th>
+          <td><input type="text" class="input-text" value="<*$res.codekey*>"   name="codekey"></td>
+        </tr>
+		<tr><td>&nbsp;</td></tr>
+        <tr>
+          <th>云打印</th>
+          <td><label><input type="radio"  value="1" name="iscloud" <if condition="$res.iscloud eq 1">checked="checked"</if>>&nbsp;&nbsp;开启</label><label><input type="radio" style="margin-left:25%;" value="0" name="iscloud" <if condition="$res.iscloud eq 0">checked="checked"</if>>&nbsp;&nbsp;关闭</label></td>
+        </tr>
+        <tr><td>&nbsp;</td></tr>
+         <tr>
+          <th>备注</th>
+          <td><textarea name="remarks" style="width:258px;height:60px;"><*$res.remarks*></textarea></td>
+        </tr>
+        <tr><td>&nbsp;</td></tr>
+      </table>
+    </div>
+      
+    <div class="">
+      <div class="btn_wrap_pd">
+<!--          </form>-->
+<input class="btn btn-danger radius del" delid="<*$res.id*>" type="submit" value="&nbsp;&nbsp;删除该客户&nbsp;&nbsp;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <input class="btn btn-primary radius" type="submit" value="&nbsp;&nbsp;修改&nbsp;&nbsp;">
+      </div>
+    </div>
+<!--	</form>-->
+</div>
+<script type="text/javascript" src="/Public/admin/js/jquery.min.js"></script> 
+<script src="/Public/layer/layer.js" type="text/javascript"></script>
+<script type="text/javascript" src="/Public/admin/js/jquery.icheck.min.js"></script> 
+<script type="text/javascript" src="/Public/admin/js/jquery.validate.min.js"></script> 
+<script type="text/javascript" src="/Public/admin/js/validate-methods.js"></script> 
+<script type="text/javascript" src="/Public/admin/js/messages_zh.min.js"></script> 
+<script type="text/javascript" src="/Public/admin/js/H-ui.js"></script> 
+<script type="text/javascript" src="/Public/admin/js/H-ui.admin.js"></script> 
+
+<script type="text/javascript">
+$(function(){
+	$('.skin-minimal input').iCheck({
+		checkboxClass: 'icheckbox-blue',
+		radioClass: 'iradio-blue',
+		increaseArea: '20%'
+	});
+	
+	$.Huitab("#tab-category .tabBar span","#tab-category .tabCon","current","click","0");
+});
+//电话号码验证
+function chkphone(txt) {
+//                        对电话账号进行验证是否已被绑定
+            var phone=$("input[name='phone']").val();
+            var id=$("input[name='id']").val();
+            if(phone===''){
+              layer.msg('请输入手机号码！'); 
+              return false;
+//                 不是为空则判断是否输入正确
+            }else{   
+                 var telReg = !!phone.match(/^(0|86|17951)?(13[0-9]|15[012356789]|17[678]|18[0-9]|14[57])[0-9]{8}$/);
+                 //如果手机号码不能通过验证
+                 if(telReg === false){
+                      layer.msg('请输入正确手机号码！'); 
+                 return false;
+                 }            
+           }
+$.post("<*:U('Custom/customphoneedit')*>",{phone:phone,id:id},function(msg){
+                console.log(msg);
+                if(msg.result==-1){
+                    $("#account").css("color","red") ;
+                    $("#account").html("该号码已被绑定！");
+                }else if(msg.result==2){
+                    $("#account").css("color","green") ;
+                    $("#account").html("该电话号码可用！");
+                }else if(msg.result==1){
+                    $("#account").css("color","green") ;
+                    $("#account").html("未变更号码！");
+                }
+            });
+     };
+     
+//是员工添加后弹出角色输入框
+    $("#sel_Sub4").change(function(){
+        var isstaff=$("#sel_Sub4").val();
+        if(isstaff==1){
+            var html="";
+            html += "<tr class='cel'><th>"+"员工角色名称"+"</th><td>"+"<input type='text' class='input-text' value=''  placeholder='请输入角色名称' name='role'></td></tr>";
+            $("#firstshow").append(html);
+        }
+        if(isstaff==0){
+            window.location.reload();
+        }
+    });
+    
+//     表单验证是否合法
+$(".btn-primary").bind("click",function(){
+    var customname=$("input[name='customname']").val();
+    var type=$("#sel_Sub option:selected").val();
+    var rec=$('#sel_Sub1').val();
+    var ware=$('#sel_Sub2').val();
+    var staffpid=$('#sel_Sub3').val();
+    var isstaff=$('#sel_Sub4').val();//是否是员工
+    var counterfeeid=$('#sel_Sub5').val();//手续费类型ID
+    var customroleid=$('#sel_Sub6').val();//是否为供应商添加
+    var station=$('#sel_Sub7').val();//绑定京东门店添加
+    var iswarehouse=$('#iswarehouse').val();
+    var phone=$("input[name='phone']").val();
+    var password=$("input[name='password']").val();
+    var address=$("input[name='address']").val();
+    var remarks=$("textarea").val();
+    var id=$("input[name='id']").val();
+    var role=$("input[name='role']").val();
+    var staffid=$("input[name='staffid']").val();//获取员工ID，后台用来判断是否已经是员工
+	var printercode=$("input[name=printercode]").val();
+	var codekey=$("input[name=codekey]").val();
+	var iscloud=$("input[name=iscloud]:checked").val();
+    if(customname===''){ layer.msg("客户名称不能为空"); return false;};
+//    if(type==''){ layer.msg("类型不能为空"); return false;};
+//    if(rec==''){ layer.msg("收款单位不能为空"); return false;};
+//    if(ware==''){ layer.msg("分仓不能为空"); return false;};
+    if(password===''){ layer.msg("密码不能为空"); return false;};
+    if(customroleid==""){
+        if(station!==""){
+            layer.msg("不是京东商户不能绑定京东门店"); return false;
+        }
+    }
+    $.post("<*:U('Custom/customeditsave')*>",{station:station,customroleid:customroleid,counterfeeid:counterfeeid,staffid:staffid,role:role,isstaff:isstaff,staffpid:staffpid,iswarehouse:iswarehouse,id:id,customname:customname,type:type,rec:rec,ware:ware,phone:phone,password:password,address:address,remarks:remarks,printercode:printercode,codekey:codekey,iscloud:iscloud},function(msg){
+                console.log(msg);
+                if(msg.result==1){
+                    layer.msg("修改成功！");
+                    setTimeout("window.parent.location.reload()",1500);
+                }else if(msg.result==-1){
+                    layer.msg("修改失败！");
+                }else{
+                    layer.msg("有数据为空，修改失败！");
+                }
+    });
+});
+//客户删除
+$(".del").bind("click",function(){
+    var a=confirm("确定要删除该客户吗？");
+    if(a){
+         var id=$(this).attr("delid");
+         $.post("<*:U('Custom/customdel')*>",{id:id},function(msg){
+                 console.log(msg);
+                 if(msg.result==1){
+                     layer.msg("删除成功！");
+                     setTimeout("window.parent.location.reload()",1500);
+                 }else if(msg.result==-1){
+                     layer.msg("删除失败！");
+                 }
+         }); 
+    }
+});
+</script>
+<!--/请在上方写此页面业务相关的脚本-->
+</body>
+</html>

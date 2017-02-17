@@ -1,0 +1,5 @@
+location /Thinkphp/ywm/ {
+    if (!-e $request_filename){
+            rewrite  ^/Thinkphp/ywm/(.*)$  /Thinkphp/ywm/index.php?s=$1  last;
+    }
+}

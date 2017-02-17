@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>管理员点添加</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link href="__PUBLIC__/admin/css/bootstrap.min.css" rel="stylesheet">
+        
+    </head>
+    <body>
+        <div style="height:20px"></div>
+        <div>
+            <form class="form-horizontal" role="form" action='Grant/adminInfo' menthod='post'>
+                <div class="form-group">
+                    <label for="inputEmail3" class="col-sm-2 control-label">管理员名:</label>
+                    <div class="col-sm-9">
+                      <input type="email" class="form-control" id="adminname" value="" >
+                    </div>
+                </div>
+                
+                 <div class="form-group">
+                    <label for="inputEmail3" class="col-sm-2 control-label">密码:</label>
+                    <div class="col-sm-9">
+                      <input type="password" class="form-control" id="passwd" placeholder="必须填写密码" >
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="inputEmail3" class="col-sm-2 control-label">所属组:</label>
+                    <div class="col-sm-9">
+                      <select class="form-control" id='gselect'>
+                        <option value=''>请选择</option>
+                        <foreach name='options' item='k'>
+                             <option value='{{$k.id}}'>{{$k.title}}</option>
+                        </foreach>   
+                      </select>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="inputEmail3" class="col-sm-2 control-label">状态:</label>
+                    <div class="col-sm-9">
+                      <div class="radio">
+                            <label>
+                              <input type="radio" name="status" id="optionsRadios1" value="1" checked >
+                              正常
+                            </label>
+                        </div>
+                        <div class="radio">
+                            <label>
+                              <input type="radio" name="status" id="optionsRadios2" value="0" >
+                              禁用
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                
+            </form>
+                <div class="form-group" style='text-align: center;'>
+                    <button type="button" class="btn btn-primary" >提交</button>
+                </div>
+        </div>
+    </body>
+    <script src="__PUBLIC__/admin/js/jquery-1.11.1.min.js"></script>
+    <script src="__PUBLIC__/admin/layer/layer.js"></script>
+    <script>
+        $('.btn-primary').on('click',function(){
+            
+            layer.load(1);//layer 加载层
+            var adminname = $('#adminname').val();
+            var passwd = $('#passwd').val();
+            var status = $("input[name='status']:checked").val();
+            var groupid = $('#gselect').val();
+            //var passwd = $('#passwd').val();
+            //alert(status);
+            $.ajax({
+                url:"{{:U('Grant/adminAdd')}}",
+                type:'POST',
+                data:{adminname:adminname,passwd:passwd,group_id:groupid,status:status},
+                success:function(res){
+                  layer.closeAll('loading');
+                  if(res===1){
+                    layer.msg('添加成功');
+                  }else{
+                    layer.msg(res); 
+                  }
+                }
+            })
+        })
+    </script>
+</html>

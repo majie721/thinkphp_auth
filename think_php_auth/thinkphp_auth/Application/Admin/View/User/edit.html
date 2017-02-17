@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>用户信息编辑</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link href="__PUBLIC__/admin/css/bootstrap.min.css" rel="stylesheet">
+        
+    </head>
+    <body>
+        <div style="height:20px"></div>
+        <div>
+            <form class="form-horizontal" role="form">
+                <div class="form-group">
+                    <label for="inputEmail3" class="col-sm-2 control-label">账号:</label>
+                    <div class="col-sm-9">
+                      <input type="email" class="form-control" id="inputEmail3"value="{{$info.phone}}" disabled>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="inputEmail3" class="col-sm-2 control-label">会员等级:</label>
+                    <div class="col-sm-9">
+                      <select class="form-control">
+                        <option>1</option>
+                        <option>2</option>
+                        <option>3</option>
+                        <option>4</option>
+                        <option>5</option>
+                      </select>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="inputEmail3" class="col-sm-2 control-label">状态:</label>
+                    <div class="col-sm-9">
+                      <div class="radio">
+                            <label>
+                              <input type="radio" name="optionsRadios" id="optionsRadios1" value="option1" checked>
+                              正常
+                            </label>
+                        </div>
+                        <div class="radio">
+                            <label>
+                              <input type="radio" name="optionsRadios" id="optionsRadios2" value="option2">
+                              禁用
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                
+            </form>
+                <div class="form-group" style='text-align: center;'>
+                    <button type="button" class="btn btn-primary" id="subbtn">提交</button>
+                </div>
+        </div>
+    </body>
+    <script src="__PUBLIC__/admin/js/jquery-1.11.1.min.js"></script>
+    <script src="__PUBLIC__/admin/layer/layer.js"></script>
+    <script>
+        $('#subbtn').on('click',function(){
+            layer.msg('Matrin:完成自定编辑功能')
+        })
+    </script>
+</html>
